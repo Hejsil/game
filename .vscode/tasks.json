@@ -1,0 +1,41 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "gcc",
+    "isShellCommand": true,
+    "echoCommand": true,
+    "args": [ 
+        "-o", "bin/main", "-Wall", "-std=c99", 
+
+        // All files to compile
+        "src/main.c", 
+        "src/menu/menu.c", 
+
+        // All include foldes
+        "-Isrc/menu",
+        
+        // Libraries
+        "-lraylib", "-lglfw3", "-lglew32", "-lopengl32", "-lopenal32", "-lgdi32"
+     ],
+    "showOutput": "always",
+
+    "tasks": [
+        {
+            "taskName": "release",
+            "args": [
+                "-O2"
+            ],
+            "suppressTaskName": true
+        },
+        {
+            "taskName": "debug",
+            "args": [
+                "-ggdb"
+            ],
+            "isBuildCommand": true,
+            "suppressTaskName": true
+        }
+    ]
+}
+
