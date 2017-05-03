@@ -6,18 +6,22 @@
     "isShellCommand": true,
     "echoCommand": true,
     "args": [ 
-        "-o", "bin/main", "-Wall", "-std=c99", 
-
         // All files to compile
         "src/main.c", 
         "src/menu/menu.c", 
+        "src/screen/screen.c",
 
         // All include foldes
         "-Isrc/menu",
+        "-Isrc/screen",
         
-        // Libraries
-        "-lraylib", "-lglfw3", "-lglew32", "-lopengl32", "-lopenal32", "-lgdi32"
+        "-o", "bin/main", "-Wall", "-std=c11"
      ],
+     "windows": {
+         "args": [ 
+             "-lraylib", "-lglfw3", "-lopengl32", "-lopenal32", "-lgdi32"
+         ]
+     },
     "showOutput": "always",
 
     "tasks": [

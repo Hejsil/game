@@ -1,38 +1,35 @@
-/*******************************************************************************************
-*
-*   raylib - Template for basic test
-*
-*   <Test description>
-*
-*   This example has been created using raylib v1.2 (www.raylib.com)
-*   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
-*
-*   Copyright (c) 2014 Ramon Santamaria (Ray San - raysan@raysanweb.com)
-*
-********************************************************************************************/
-
 #include "raylib.h"
 #include "menu.h"
+
+#define MENUSIZE 4
 
 int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    Menu menu = (Menu){ 
-        0, LIGHTGRAY, GREEN,
-
-        (MenuItem){ "Test1", 20, 20, 20 },
-        (MenuItem){ "Test2", 60, 60, 20 }
+    const int screen_width = 1600;
+    const int screen_height = 900;
+    
+    Screen screen = {
+        { screen_width, screen_height },
+        { 16, 9 }
     };
 
-    const int screen_width = 800;
-    const int screen_height = 450;
+    MenuItem items[MENUSIZE] = {
+        { "Test1", { 1, 1 }, 20 },
+        { "Test2", { 1, 2 }, 20 },
+        { "Test3", { 1, 3 }, 20 },
+        { "Test4", { 1, 4 }, 20 },
+    };
+
+    Menu menu = { 
+        &screen, 0, MENUSIZE, LIGHTGRAY, GREEN, items
+    };
+
+    InitWindow(screen.pixel_size.x, screen.pixel_size.y, "Random game");
     
-    InitWindow(screen_width, screen_height, "raylib basic test - <test description>");
+    SetTargetFPS(240);
     
-    // TODO: Initialize all required variables and load all required data here!
-    
-    SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
     
     // Main game loop
@@ -40,10 +37,7 @@ int main()
     {
         // Update
         //----------------------------------------------------------------------------------
-        if (IsKeyPressed(KEY_UP))
-            MenuMoveUp(&menu);
-        if (IsKeyPressed(KEY_DOWN))
-            MenuMoveDown(&menu);
+        UpdateMenu(&menu);
             
         
         // Draw
@@ -51,15 +45,9 @@ int main()
         BeginDrawing();
         
             ClearBackground(RAYWHITE);
+            DrawFPS(10, 10);
 
-            for (int i = 0; i < MENUSIZE; i++) {
-                MenuItem* menu_selected = &menu.items[i];
-
-                DrawText(
-                    menu_selected->text, menu_selected->pos_x, menu_selected->pos_y, 
-                    menu_selected->font_size, menu.selected_item == i ? menu.selected_color : menu.default_color
-                );
-            }
+            DrawMenu(&menu);
         
         EndDrawing();
         //----------------------------------------------------------------------------------
