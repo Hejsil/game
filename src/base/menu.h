@@ -5,10 +5,11 @@
 #include "screen.h"
 
 typedef struct {
+    SpriteFont* font;
     char* text;
     float size;
+    int spacing;
     Vector2 pos;
-    SpriteFont* font;
 } MenuItem;
 
 typedef struct {

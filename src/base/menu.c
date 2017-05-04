@@ -31,11 +31,15 @@ void DrawMenu(Menu* menu) {
         MenuItem* menu_selected = &menu->items[i];
 
         Vector2 position = CalculateScreenPosition(menu->screen, menu_selected->pos);
-        float font_size = 1;// menu_selected->font->baseSize; //CalculateScreenY(menu->screen, menu_selected->size);
+        float height = CalculateScreenY(menu->screen, menu_selected->size);
+        Vector2 actual_size = MeasureTextEx(*menu_selected->font, menu_selected->text, height, menu_selected->spacing);  
+
+        position.x -= actual_size.x / 2;
+        position.y -= height / 2;
 
         DrawTextEx(
             *menu_selected->font, menu_selected->text, 
-            position, font_size, 0,
+            position, height, menu_selected->spacing,
             menu->selected_item == i ? menu->selected_color : menu->default_color
         );
     }

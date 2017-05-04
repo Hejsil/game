@@ -8,14 +8,13 @@
     "args": [ 
         // All files to compile
         "src/main.c", 
-        "src/menu/menu.c", 
-        "src/screen/screen.c",
+        "src/base/menu.c", 
+        "src/base/screen.c",
 
         // All include foldes
-        "-Isrc/menu",
-        "-Isrc/screen",
+        "-Isrc/base",
         
-        "-o", "bin/main", "-Wall", "-std=c11"
+        "-o", "bin/main", "-Wall", "-std=c99"
      ],
      "windows": {
          "args": [ 
