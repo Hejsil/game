@@ -1,85 +1,85 @@
 #include "raylib.h"
 #include "menu.h"
-#include "screen.h"
+#include "options.h"
+#include "sceens.h"
 
 #define MENUSIZE 4
 
 int main()
 {
+    //--------------------------------------------------------------------------------------
     // Initialization
     //--------------------------------------------------------------------------------------
-    Screen screen = {
+    Options options = {
         { 1600, 900 },
         { 16, 9 }
     };
     
-    InitWindow(screen.pixel_size.x, screen.pixel_size.y, "Random game");
+    // We init window before getting the font, as we get a an unusable font, if we do it after
+    InitWindow(options.pixel_size.x, options.pixel_size.y, "Random game");
     SetTargetFPS(240);
 
-    SpriteFont font = GetDefaultFont();     
-
-    MenuItem items[MENUSIZE] = {
+    // Locals
+    SpriteFont font = GetDefaultFont();
+    Camera2D camera;
+    
+    // Initialize menus
+    MenuItem main_menu_items[MENUSIZE] = {
         { &font, "New Game",  0.4, 2, { 0, -1 } },
         { &font, "Load Game", 0.4, 2, { 0,  0 } },
         { &font, "Options",   0.4, 2, { 0,  1 } },
         { &font, "Exit",      0.4, 2, { 0,  2 } }
     };
 
-    Menu menu = { 
-        &screen, 0, MENUSIZE, LIGHTGRAY, GREEN, items
+    Menu main_menu = { 
+        0, MENUSIZE, LIGHTGRAY, GREEN, main_menu_items
     };
 
-    Camera2D camera = {
-        { screen.pixel_size.x / 2, screen.pixel_size.y / 2 },
-        { 0, 0 },
-        0, 1
+    MenuItem option_menu_items[MENUSIZE] = {
+        { &font, "New Game",  0.4, 2, { 0, -1 } },
+        { &font, "Load Game", 0.4, 2, { 0,  0 } },
+        { &font, "Options",   0.4, 2, { 0,  1 } },
+        { &font, "Exit",      0.4, 2, { 0,  2 } }
     };
-    
+
+    Menu option_menu = {
+        0, MENUSIZE, LIGHTGRAY, GREEN, option_menu_items
+    };
+
+
+    InitializeMainMenuSceen(&main_menu, &camera, options);
+
     //--------------------------------------------------------------------------------------
-    
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
+    //--------------------------------------------------------------------------------------
+    while (!WindowShouldClose()) {
+        //--------------------------------------------------------------------------------------
         // Update
-        //----------------------------------------------------------------------------------
-        UpdateMenu(&menu);
+        //--------------------------------------------------------------------------------------
+        UpdateMainMenuSceen(&main_menu);
 
-
-
-
-        // Calculate camera position
-        //MenuItem* selected_item = &menu.items[menu.selected_item];
-
-        //camera.target = CalculateScreenPosition(&screen, selected_item->pos);
-
-        // Center the offset based on the screens size, and the cameras target
-        camera.offset.x = screen.pixel_size.x / 2 - camera.target.x; 
-        camera.offset.y = screen.pixel_size.y / 2 - camera.target.y;
         
+        //--------------------------------------------------------------------------------------
         // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
-        
+        //--------------------------------------------------------------------------------------
+        BeginDrawing(); {
             ClearBackground(RAYWHITE);
 
-            Begin2dMode(camera); 
-                DrawMenu(&menu);
-            End2dMode();  
+            Begin2dMode(camera); {
+                DrawMainMenuSceen(main_menu, options);
+
+            } End2dMode();  
 
 
             DrawFPS(10, 10);
-        
-        EndDrawing();
-        //----------------------------------------------------------------------------------
+
+        } EndDrawing();
     }
 
+    //--------------------------------------------------------------------------------------
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    
-    // TODO: Unload all loaded data (textures, fonts, audio) here!
-    
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+    CloseWindow(); 
     
     return 0;
 }

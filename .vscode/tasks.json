@@ -9,10 +9,12 @@
         // All files to compile
         "src/main.c", 
         "src/base/menu.c", 
-        "src/base/screen.c",
+        "src/base/options.c", 
+        "src/sceens/sceens.c",
 
         // All include foldes
         "-Isrc/base",
+        "-Isrc/sceens",
         
         "-o", "bin/main", "-Wall", "-std=c99"
      ],

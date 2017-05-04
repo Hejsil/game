@@ -2,7 +2,7 @@
 #define MENU_H
 
 #include "raylib.h"
-#include "screen.h"
+#include "options.h"
 
 typedef struct {
     SpriteFont* font;
@@ -13,8 +13,6 @@ typedef struct {
 } MenuItem;
 
 typedef struct {
-    Screen* screen;
-
     int selected_item, item_count;
     Color default_color, selected_color;
 
@@ -24,6 +22,6 @@ typedef struct {
 void MenuMoveUp(Menu* menu);
 void MenuMoveDown(Menu* menu);
 void UpdateMenu(Menu* menu);
-void DrawMenu(Menu* menu);
+void DrawMenu(Menu menu, Options options);
 
 #endif /* MENU_H */
