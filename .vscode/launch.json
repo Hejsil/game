@@ -5,15 +5,15 @@
             "name": "C++ Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/bin/main.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}/bin",
             "environment": [],
-            "miDebuggerPath": "gdb.exe",
             "externalConsole": true,
             "linux": {
+                "program": "${workspaceRoot}/bin/main",
                 "MIMode": "gdb",
+                "miDebuggerPath": "gdb",
                 "setupCommands": [
                     {
                         "description": "Enable pretty-printing for gdb",
@@ -26,6 +26,8 @@
                 "MIMode": "lldb"
             },
             "windows": {
+                "program": "${workspaceRoot}/bin/main",
+                "miDebuggerPath": "gdb.exe",
                 "MIMode": "gdb",
                 "setupCommands": [
                     {

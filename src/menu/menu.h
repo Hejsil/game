@@ -6,8 +6,9 @@
 
 typedef struct {
     char* text;
+    float size;
     Vector2 pos;
-    int font_size;
+    SpriteFont* font;
 } MenuItem;
 
 typedef struct {

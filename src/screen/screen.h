@@ -4,14 +4,12 @@
 #include "raylib.h"
 
 typedef struct {
-    int x, y;
-} Point;
-
-typedef struct {
-    Point pixel_size;
+    Vector2 pixel_size;
     Vector2 unit_size;
 } Screen;
 
-Point CalculateScreenPosition(Screen* screen, Vector2 unit_pos);
+Vector2 CalculateScreenPosition(Screen* screen, Vector2 unit_pos);
+float CalculateScreenX(Screen* screen, float unit_x);
+float CalculateScreenY(Screen* screen, float unit_y);
 
 #endif /* SCREEN_H */

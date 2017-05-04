@@ -30,12 +30,12 @@ void DrawMenu(Menu* menu) {
     for (int i = 0; i < menu->item_count; i++) {
         MenuItem* menu_selected = &menu->items[i];
 
-        Point position = CalculateScreenPosition(menu->screen, menu_selected->pos);
+        Vector2 position = CalculateScreenPosition(menu->screen, menu_selected->pos);
+        float font_size = 1;// menu_selected->font->baseSize; //CalculateScreenY(menu->screen, menu_selected->size);
 
-        DrawText(
-            menu_selected->text, 
-            position.x, position.y, 
-            menu_selected->font_size, 
+        DrawTextEx(
+            *menu_selected->font, menu_selected->text, 
+            position, font_size, 0,
             menu->selected_item == i ? menu->selected_color : menu->default_color
         );
     }
