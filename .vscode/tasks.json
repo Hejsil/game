@@ -10,11 +10,11 @@
         "src/main.c", 
         "src/base/menu.c", 
         "src/base/options.c", 
-        "src/sceens/sceens.c",
+        "src/game/screens.c",
 
         // All include foldes
         "-Isrc/base",
-        "-Isrc/sceens",
+        "-Isrc/game",
         
         "-o", "bin/main", "-Wall", "-std=c99"
      ],

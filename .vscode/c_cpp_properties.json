@@ -21,6 +21,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceRoot}",
+                "${workspaceRoot}/sceens",
+                "${workspaceRoot}/base",
                 "/usr/include",
                 "/usr/local/include"
             ],

@@ -1,53 +1,63 @@
 #include "raylib.h"
 #include "menu.h"
 #include "options.h"
-#include "sceens.h"
+#include "screens.h"
+#include "game_state.h"
 
-#define MENUSIZE 4
+#define MAINMENUSIZE 4
 
 int main()
 {
     //--------------------------------------------------------------------------------------
     // Initialization
     //--------------------------------------------------------------------------------------
-    Options options = {
-        { 1600, 900 },
+
+    // Initialize game_state
+    GameState game_state;
+    game_state.current_screen = MAINMENU;
+
+    game_state.options = (Options){
+        { 800, 450 },
         { 16, 9 }
     };
     
     // We init window before getting the font, as we get a an unusable font, if we do it after
-    InitWindow(options.pixel_size.x, options.pixel_size.y, "Random game");
+    InitWindow(
+        game_state.options.pixel_size.x, 
+        game_state.options.pixel_size.y, 
+        "Random game"
+    );
+
     SetTargetFPS(240);
 
     // Locals
     SpriteFont font = GetDefaultFont();
-    Camera2D camera;
     
     // Initialize menus
-    MenuItem main_menu_items[MENUSIZE] = {
+    MenuItem main_menu_items[MAINMENUSIZE] = {
         { &font, "New Game",  0.4, 2, { 0, -1 } },
         { &font, "Load Game", 0.4, 2, { 0,  0 } },
         { &font, "Options",   0.4, 2, { 0,  1 } },
         { &font, "Exit",      0.4, 2, { 0,  2 } }
     };
 
-    Menu main_menu = { 
-        0, MENUSIZE, LIGHTGRAY, GREEN, main_menu_items
+    game_state.main_menu = (Menu){ 
+        0, sizeof(main_menu_items), LIGHTGRAY, GREEN, main_menu_items
     };
 
-    MenuItem option_menu_items[MENUSIZE] = {
+    MenuItem option_menu_items[MAINMENUSIZE] = {
         { &font, "New Game",  0.4, 2, { 0, -1 } },
         { &font, "Load Game", 0.4, 2, { 0,  0 } },
         { &font, "Options",   0.4, 2, { 0,  1 } },
         { &font, "Exit",      0.4, 2, { 0,  2 } }
     };
 
-    Menu option_menu = {
-        0, MENUSIZE, LIGHTGRAY, GREEN, option_menu_items
+    game_state.option_menu = (Menu){
+        0, sizeof(option_menu_items), LIGHTGRAY, GREEN, option_menu_items
     };
 
 
-    InitializeMainMenuSceen(&main_menu, &camera, options);
+    InitializeMainMenuScreen(&game_state);
 
     //--------------------------------------------------------------------------------------
     // Main game loop
@@ -56,7 +66,14 @@ int main()
         //--------------------------------------------------------------------------------------
         // Update
         //--------------------------------------------------------------------------------------
-        UpdateMainMenuSceen(&main_menu);
+        switch (game_state.current_screen) {
+            case MAINMENU:
+                UpdateMainMenuScreen(&game_state);
+                break;
+            case OPTIONSMENU:
+                break;
+        }
+        
 
         
         //--------------------------------------------------------------------------------------
@@ -65,8 +82,15 @@ int main()
         BeginDrawing(); {
             ClearBackground(RAYWHITE);
 
-            Begin2dMode(camera); {
-                DrawMainMenuSceen(main_menu, options);
+            Begin2dMode(game_state.camera); {
+
+                switch (game_state.current_screen) {
+                    case MAINMENU:
+                        DrawMainMenuScreen(&game_state);
+                        break;
+                    case OPTIONSMENU:
+                        break;
+                }
 
             } End2dMode();  
 
