@@ -1,15 +1,15 @@
 #include "screens.h"
 
+// Main menu
 void InitializeMainMenuScreen(GameState* game_state) {
     Camera2D* camera = &game_state->camera;
-    Options* options = &game_state->options;
 
     camera->target = (Vector2){ 0, 0 }; 
     camera->rotation = 0;
-    camera->zoom = 1;
+    camera->zoom = game_state->zoom;
 
-    camera->offset.x = options->pixel_size.x / 2 - camera->target.x; 
-    camera->offset.y = options->pixel_size.y / 2 - camera->target.y;
+    camera->offset.x = game_state->window_size.x / 2 - camera->target.x; 
+    camera->offset.y = game_state->window_size.y / 2 - camera->target.y;
 }
 
 void UpdateMainMenuScreen(GameState* game_state) {
@@ -22,6 +22,7 @@ void UpdateMainMenuScreen(GameState* game_state) {
             case 1: // Load Game
                 break;
             case 2: // Options
+                InitializeOptionMenuScreen(game_state);
                 game_state->current_screen = OPTIONSMENU;
                 break;
             case 3: // Exit
@@ -33,5 +34,53 @@ void UpdateMainMenuScreen(GameState* game_state) {
 }
 
 void DrawMainMenuScreen(GameState* game_state) {
-    DrawMenu(game_state->main_menu, game_state->options);
+    DrawMenu(game_state->main_menu);
+}
+
+// Options menu
+void InitializeOptionMenuScreen(GameState* game_state) {
+    Camera2D* camera = &game_state->camera;
+
+    camera->target = (Vector2){ 0, 0 }; 
+    camera->rotation = 0;
+    camera->zoom = game_state->zoom;
+
+    camera->offset.x = game_state->window_size.x / 2 - camera->target.x;
+    camera->offset.y = game_state->window_size.y / 2 - camera->target.y;
+}
+
+void UpdateOptionMenuScreen(GameState* game_state) {
+    Menu* option_menu = &game_state->option_menu;
+
+    switch (option_menu->selected_item) {
+        case 0: // Resolution
+            if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_RIGHT)) {
+                int new_index = game_state->window_size_index;
+
+                new_index += IsKeyPressed(KEY_RIGHT) ? 1 : -1;
+
+                if (new_index < 0) {
+                    new_index = game_state->size_options_count - 1;
+                } else if (game_state->size_options_count <= new_index) {
+                    new_index = 0;
+                }
+
+                SetWindowsSize(game_state, new_index);
+                CloseWindow();
+
+                InitWindow(
+                    game_state->window_size.x, 
+                    game_state->window_size.y, 
+                    "Random game"
+                );
+            }
+
+            break;
+    }
+
+    UpdateMenu(option_menu);
+}
+
+void DrawOptionMenuScreen(GameState* game_state) {
+    DrawMenu(game_state->option_menu);
 }

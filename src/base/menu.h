@@ -2,14 +2,13 @@
 #define MENU_H
 
 #include "raylib.h"
-#include "options.h"
 
 typedef struct {
     SpriteFont* font;
     char* text;
-    float size;
+    float font_size;
     int spacing;
-    Vector2 pos;
+    Vector2 position;
 } MenuItem;
 
 typedef struct {
@@ -22,6 +21,6 @@ typedef struct {
 void MenuMoveUp(Menu* menu);
 void MenuMoveDown(Menu* menu);
 void UpdateMenu(Menu* menu);
-void DrawMenu(Menu menu, Options options);
+void DrawMenu(Menu menu);
 
 #endif /* MENU_H */

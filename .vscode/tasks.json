@@ -9,8 +9,8 @@
         // All files to compile
         "src/main.c", 
         "src/base/menu.c", 
-        "src/base/options.c", 
         "src/game/screens.c",
+        "src/game/game_state.c",
 
         // All include foldes
         "-Isrc/base",
