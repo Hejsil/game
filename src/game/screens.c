@@ -1,7 +1,6 @@
 #include "screens.h"
 
-// Main menu
-void InitializeMainMenuScreen(GameState* game_state) {
+void DefaultScreenInitializer(GameState* game_state) {
     Camera2D* camera = &game_state->camera;
 
     camera->target = (Vector2){ 0, 0 }; 
@@ -12,6 +11,13 @@ void InitializeMainMenuScreen(GameState* game_state) {
     camera->offset.y = game_state->window_size.y / 2 - camera->target.y;
 }
 
+// --------------
+// Main menu
+// --------------
+void InitializeMainMenuScreen(GameState* game_state) {
+    DefaultScreenInitializer(game_state);
+}
+
 void UpdateMainMenuScreen(GameState* game_state) {
     Menu* main_menu = &game_state->main_menu;
 
@@ -20,12 +26,15 @@ void UpdateMainMenuScreen(GameState* game_state) {
             case 0: // New game
                 break;
             case 1: // Load Game
+                InitializeLoadMenuScreen(game_state);
+                game_state->current_screen = LOAD_MENU;
                 break;
             case 2: // Options
                 InitializeOptionMenuScreen(game_state);
-                game_state->current_screen = OPTIONSMENU;
+                game_state->current_screen = OPTIONS_MENU;
                 break;
             case 3: // Exit
+                CloseWindow();
                 break;
         }
     }
@@ -37,16 +46,11 @@ void DrawMainMenuScreen(GameState* game_state) {
     DrawMenu(game_state->main_menu);
 }
 
+// --------------
 // Options menu
+// --------------
 void InitializeOptionMenuScreen(GameState* game_state) {
-    Camera2D* camera = &game_state->camera;
-
-    camera->target = (Vector2){ 0, 0 }; 
-    camera->rotation = 0;
-    camera->zoom = game_state->zoom;
-
-    camera->offset.x = game_state->window_size.x / 2 - camera->target.x;
-    camera->offset.y = game_state->window_size.y / 2 - camera->target.y;
+    DefaultScreenInitializer(game_state);
 }
 
 void UpdateOptionMenuScreen(GameState* game_state) {
@@ -65,14 +69,9 @@ void UpdateOptionMenuScreen(GameState* game_state) {
                     new_index = 0;
                 }
 
-                SetWindowsSize(game_state, new_index);
+                // TODO: Figure out how to actually resize the window
+                //SetWindowsSize(game_state, new_index);
                 CloseWindow();
-
-                InitWindow(
-                    game_state->window_size.x, 
-                    game_state->window_size.y, 
-                    "Random game"
-                );
             }
 
             break;
@@ -83,4 +82,19 @@ void UpdateOptionMenuScreen(GameState* game_state) {
 
 void DrawOptionMenuScreen(GameState* game_state) {
     DrawMenu(game_state->option_menu);
+}
+
+// --------------
+// Load menu
+// --------------
+void InitializeLoadMenuScreen(GameState* game_state) {
+    DefaultScreenInitializer(game_state);
+}
+
+void UpdateLoadMenuScreen(GameState* game_state) {
+    //UpdateMenu(&game_state->main_menu);
+}
+
+void DrawLoadMenuScreen(GameState* game_state) {
+    //DrawMenu(game_state->main_menu);
 }

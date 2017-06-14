@@ -5,7 +5,7 @@
 
 #define MAINMENUSIZE 4
 #define OPTIONMENUSIZE 1
-#define SIZEOPTIONSSIZE 18
+#define RESOLUTIONOPTIONSSIZE 18
 
 int main()
 {
@@ -15,10 +15,10 @@ int main()
 
     // Initialize game_state
     GameState game_state;
-    game_state.current_screen = MAINMENU;
+    game_state.current_screen = MAIN_MENU;
 
     // Initialize resolution options
-    Vector2 size_options[SIZEOPTIONSSIZE] = {
+    Vector2 size_options[RESOLUTIONOPTIONSSIZE] = {
         { 640 , 360  },
         { 720 , 405  },
         { 854 , 480  },
@@ -54,7 +54,7 @@ int main()
         "Random game"
     );
 
-    SetTargetFPS(240);
+    SetTargetFPS(999999);
 
     // Locals
     SpriteFont font = GetDefaultFont();
@@ -90,11 +90,14 @@ int main()
         // Update
         //--------------------------------------------------------------------------------------
         switch (game_state.current_screen) {
-            case MAINMENU:
+            case MAIN_MENU:
                 UpdateMainMenuScreen(&game_state);
                 break;
-            case OPTIONSMENU:
+            case OPTIONS_MENU:
                 UpdateOptionMenuScreen(&game_state);
+                break;
+            case LOAD_MENU:
+                UpdateLoadMenuScreen(&game_state);
                 break;
         }
         
@@ -109,11 +112,14 @@ int main()
             Begin2dMode(game_state.camera); {
 
                 switch (game_state.current_screen) {
-                    case MAINMENU:
+                    case MAIN_MENU:
                         DrawMainMenuScreen(&game_state);
                         break;
-                    case OPTIONSMENU:
+                    case OPTIONS_MENU:
                         DrawOptionMenuScreen(&game_state);
+                        break;
+                    case LOAD_MENU:
+                        DrawLoadMenuScreen(&game_state);
                         break;
                 }
 

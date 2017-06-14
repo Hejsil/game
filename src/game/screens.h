@@ -15,4 +15,9 @@ void InitializeOptionMenuScreen(GameState* game_state);
 void UpdateOptionMenuScreen(GameState* game_state);
 void DrawOptionMenuScreen(GameState* game_state);
 
+// Load menu
+void InitializeLoadMenuScreen(GameState* game_state);
+void UpdateLoadMenuScreen(GameState* game_state);
+void DrawLoadMenuScreen(GameState* game_state);
+
 #endif /* SCREENS_H */

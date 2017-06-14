@@ -4,8 +4,9 @@
 #include "menu.h"
 
 typedef enum {
-    MAINMENU,
-    OPTIONSMENU
+    MAIN_MENU,
+    OPTIONS_MENU,
+    LOAD_MENU
 } Screen;
 
 typedef struct {
