@@ -1,7 +1,8 @@
 #include "raylib.h"
-#include "menu.h"
-#include "screens.h"
 #include "game_state.h"
+#include "main_menu.h"
+#include "load_menu.h"
+#include "options_menu.h"
 
 #define MAINMENUSIZE 4
 #define OPTIONMENUSIZE 1
@@ -54,7 +55,8 @@ int main()
         "Random game"
     );
 
-    SetTargetFPS(999999);
+    SetExitKey(-1);
+    SetTargetFPS(240);
 
     // Locals
     SpriteFont font = GetDefaultFont();
@@ -99,6 +101,9 @@ int main()
             case LOAD_MENU:
                 UpdateLoadMenuScreen(&game_state);
                 break;
+            case GAME:
+                UpdateGame(&game_state);
+                break;
         }
         
 
@@ -120,6 +125,9 @@ int main()
                         break;
                     case LOAD_MENU:
                         DrawLoadMenuScreen(&game_state);
+                        break;
+                    case GAME:
+                        DrawGame(&game_state);
                         break;
                 }
 

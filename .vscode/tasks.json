@@ -8,13 +8,16 @@
     "args": [ 
         // All files to compile
         "src/main.c", 
-        "src/base/menu.c", 
-        "src/game/screens.c",
         "src/game/game_state.c",
+        "src/game/menus/base_menu.c",
+        "src/game/menus/main_menu.c",
+        "src/game/menus/load_menu.c",
+        "src/game/menus/options_menu.c",
 
         // All include foldes
         "-Isrc/base",
         "-Isrc/game",
+        "-Isrc/game/menus",
         
         "-o", "bin/main", "-Wall", "-std=c99"
      ],

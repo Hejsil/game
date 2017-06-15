@@ -1,6 +1,4 @@
-#ifndef MENU_H
-#define MENU_H
-
+#pragma once
 #include "raylib.h"
 
 typedef struct {
@@ -22,5 +20,3 @@ void MenuMoveUp(Menu* menu);
 void MenuMoveDown(Menu* menu);
 void UpdateMenu(Menu* menu);
 void DrawMenu(Menu menu);
-
-#endif /* MENU_H */

@@ -1,5 +1,5 @@
 #include "assert.h"
-#include "menu.h"
+#include "base_menu.h"
 
 void MenuMoveUp(Menu* menu) {
     assert(menu->selected_item < menu->item_count && menu->selected_item >= 0);
